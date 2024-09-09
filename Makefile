@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKER_PHP = dsb0-php
+DOCKER_PHP = dsb-php
 UID = $(shell id -u) ## User UID
 SYMFONY_VERSION = 6.4.*
 # Ruta que deseas añadir al PATH
@@ -17,7 +17,7 @@ build: ## Build containers
 	U_ID=${UID} docker compose build
 
 start: ## Start the containers
-	docker network create dsb0-network || true
+	docker network create dsb-network || true
 	U_ID=${UID} docker compose up -d
 
 stop: ## Stop the containers

@@ -1,21 +1,21 @@
 version: '3.5'
 
 services:
-  dsb0-web-server:
-    container_name: dsb0-web-server
+  dsb-web-server:
+    container_name: dsb-web-server
     build:
       context: ./docker/server
       args:
         UID: $U_ID
     ports:
-      - 8082:80
+      - 8084:80
     volumes:
       - ./public:/appdata/www/public
     networks:
-      - dsb0-network
+      - dsb-network
   
-  dsb0-php:
-    container_name: dsb0-php
+  dsb-php:
+    container_name: dsb-php
     build:
       context: ./docker/php
       args:
@@ -23,24 +23,26 @@ services:
     volumes:
       - ./:/appdata/www
     networks:
-      - dsb0-network
+      - dsb-network
   
-  dsb0-db:
-    container_name: dsb0-db
+  dsb-db:
+    container_name: dsb-db
     image: mysql:8.0
+    labels:
+      "instance-name": "docker-symfony-base-mysql-8.0"
     ports:
       - 40102:3306
     environment:
-      MYSQL_DATABASE: dsb0_database
+      MYSQL_DATABASE: dsb_database
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: root
     command: mysqld --sql_mode="STRICT_ALL_TABLES,NO_ENGINE_SUBSTITUTION"
     volumes:
-      - ./dsb0-database-data:/var/lib/mysql
+      - ./dsb-database-data:/var/lib/mysql
     networks:
-      - dsb0-network
+      - dsb-network
 
 networks:
-  dsb0-network:
+  dsb-network:
     external: true

@@ -1,5 +1,7 @@
 FROM php:8.2-fpm
 
+LABEL name="php8.2-fpm-docker-symfony-base"
+
 ARG UID
 EXPOSE $UID
 
