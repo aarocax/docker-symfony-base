@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 ARG UID
 EXPOSE $UID
@@ -19,6 +19,11 @@ RUN apt-get update \
     && docker-php-ext-install intl pdo pdo_mysql zip gd soap bcmath sockets \
     && pecl install xdebug \
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache xdebug
+
+RUN apt-get install -y libpq-dev
+RUN apt-get install -y postgresql postgresql-contrib 
+RUN docker-php-ext-install pgsql
+RUN docker-php-ext-install pdo_pgsql
 
 RUN curl https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 RUN composer self-update

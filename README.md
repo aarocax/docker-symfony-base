@@ -18,3 +18,5 @@ Ir al navegador y ver la aplicaión corriendo localhost:8082
 detener contenedores: make stop
 levantar contenedores: make start
 acceso al contendor de php: make ssh
+
+DATABASE_URL="postgresql://user:password@dsb0-db:5432/dsb0_database?serverVersion=16&charset=utf8"
