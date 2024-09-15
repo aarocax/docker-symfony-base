@@ -19,4 +19,8 @@ detener contenedores: make stop
 levantar contenedores: make start
 acceso al contendor de php: make ssh
 
-DATABASE_URL="postgresql://user:password@dsb0-db:5432/dsb0_database?serverVersion=16&charset=utf8"
+DATABASE_URL="postgresql://dsb:&11Qo22ygn*>6@dsb0-db:5432/dsb?serverVersion=16&charset=utf8"
+
+psql -U dsb
+
+psql -h dsb-db --port=5432  -U dsb

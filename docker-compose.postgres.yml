@@ -1,0 +1,50 @@
+version: '3.5'
+
+services:
+  dsb-web-server:
+    container_name: dsb-web-server
+    build:
+      context: ./docker/server
+      args:
+        UID: $U_ID
+    ports:
+      - 8084:80
+    volumes:
+      - ./public:/appdata/www/public
+    networks:
+      - dsb-network
+  
+  dsb-php:
+    container_name: dsb-php
+    build:
+      context: ./docker/php
+      args:
+        UID: $U_ID
+    volumes:
+      - ./:/appdata/www
+    networks:
+      - dsb-network
+  
+  dsb-db:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-dsb}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-&11Qo22ygn*>6}
+      POSTGRES_USER: ${POSTGRES_USER:-dsb}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB:-dsb}", "-U", "${POSTGRES_USER:-dsb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    ports:
+      - "5437:5432"
+    volumes:
+      - ./database_data:/var/lib/postgresql/data:rw
+    networks:
+      - dsb-network
+
+networks:
+  dsb-network:
+    external: true
