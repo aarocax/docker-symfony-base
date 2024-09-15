@@ -1,5 +1,7 @@
 FROM nginx:1.27.1
 
+LABEL name="nginx-docker-symfony-base"
+
 ARG UID
 EXPOSE $UID
 
